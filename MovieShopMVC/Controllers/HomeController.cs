@@ -1,4 +1,5 @@
-﻿using Infrastructure.Services;
+﻿using ApplicationCore.ServiceContracts;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using MovieShopMVC.Models;
 using System.Diagnostics;
@@ -8,10 +9,12 @@ namespace MovieShopMVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IMovieService _movieService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IMovieService movieService)
         {
             _logger = logger;
+            _movieService = movieService;
         }
 
         // action methods inside the controller
@@ -26,8 +29,8 @@ namespace MovieShopMVC.Controllers
             // we need to send the model data to the view (the List<Movies>)
             // passing data from controller/action methods to views, through C# models
 
-            var movieService = new MovieService();
-            var movieCards = movieService.GetTopRevenueMovies();
+            
+            var movieCards = _movieService.GetTopRevenueMovies();
             
             return View(movieCards);
         }
