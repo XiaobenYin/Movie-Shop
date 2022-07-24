@@ -17,6 +17,7 @@ namespace Infrastructure.Data
         }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
+        public DbSet<Trailer> Trailers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

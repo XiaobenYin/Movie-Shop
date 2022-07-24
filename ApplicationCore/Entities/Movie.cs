@@ -29,6 +29,10 @@ namespace ApplicationCore.Entities
 
         public decimal? Rating { get; set; }
 
+        // navigation property
+        // one movie could have multiple trailers
+        public ICollection<Trailer> Trailers { get; set; }
+
 
     }
 }
