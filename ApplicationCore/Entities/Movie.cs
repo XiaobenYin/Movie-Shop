@@ -32,7 +32,7 @@ namespace ApplicationCore.Entities
         // navigation property
         // one movie could have multiple trailers
         public ICollection<Trailer> Trailers { get; set; }
-
+        public ICollection<MovieGenre> GenresOfMovie { get; set; }
 
     }
 }

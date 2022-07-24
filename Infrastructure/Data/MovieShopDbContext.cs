@@ -15,15 +15,25 @@ namespace Infrastructure.Data
         {
 
         }
+
+        // the table name is "Movies", "Genres", etc..
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Trailer> Trailers { get; set; }
+        public DbSet<MovieGenre> MovieGenres { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // we can specify the fluent API way
 
             modelBuilder.Entity<Movie>(ConfigureMovie);
+            modelBuilder.Entity<MovieGenre>(ConfigureMovieGenre);
+        }
+
+        private void ConfigureMovieGenre(EntityTypeBuilder<MovieGenre> builder)
+        {
+            builder.ToTable("MovieGenres");
+            builder.HasKey(mg => new { mg.MovieId, mg.GenreId });
         }
 
         private void ConfigureMovie(EntityTypeBuilder<Movie> builder)
@@ -31,7 +41,7 @@ namespace Infrastructure.Data
             // we can give the rules for our Movie entity
             builder.HasKey(m => m.Id);  // define the primary key, and by default the Id is the primary key
             builder.Property(m => m.Title).HasMaxLength(256);
-            builder.Property(m=> m.Overview).HasMaxLength(4096);
+            builder.Property(m => m.Overview).HasMaxLength(4096);
             builder.Property(m => m.Tagline).HasMaxLength(512);
             builder.Property(m => m.ImdbUrl).HasMaxLength(2084);
             builder.Property(m => m.TmdbUrl).HasMaxLength(2084);

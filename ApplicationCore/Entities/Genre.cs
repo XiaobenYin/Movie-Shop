@@ -13,5 +13,6 @@ namespace ApplicationCore.Entities
 
         [MaxLength(24)]
         public string Name { get; set; }
+        public ICollection<MovieGenre> MoviesOfGenre { get; set; }
     }
 }
