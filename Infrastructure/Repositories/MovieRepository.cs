@@ -32,8 +32,6 @@ namespace Infrastructure.Repositories
 
             var movies = _movieShopDbContext.Movies.OrderByDescending(m => m.Revenue).Take(30).ToList();
             return movies;
-
-
         }
 
         public List<Movie> GetTop30RatedMovies()
