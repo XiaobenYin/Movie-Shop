@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ApplicationCore.Models;
 
 namespace Infrastructure.Repositories
 {
@@ -19,6 +21,19 @@ namespace Infrastructure.Repositories
         }
 
         public Movie GetById(int id)
+        {
+            // select * from movie where id = passed-in id join genre, cast, moviegenre, moviecast
+            var movieDetails = _movieShopDbContext.Movies
+                .Include(m=>m.GenresOfMovie)
+                .ThenInclude(m=>m.Genre)
+                .Include(m=>m.CastsOfMovie)
+                .ThenInclude(m=>m.Cast)
+                .Include(m=>m.Trailers)
+                .FirstOrDefault(m=>m.Id == id);
+            return movieDetails;
+        }
+
+        public MovieDetailsModel GetMovieDetails(int movieId)
         {
             throw new NotImplementedException();
         }

@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Entities;
+using ApplicationCore.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,6 @@ namespace ApplicationCore.RepositoryContracts
         List<Movie> GetTop30RatedMovies();
 
         Movie GetById(int id);
+        MovieDetailsModel GetMovieDetails(int movieId);
     }
 }
