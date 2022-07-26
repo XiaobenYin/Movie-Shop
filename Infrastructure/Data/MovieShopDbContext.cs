@@ -27,6 +27,7 @@ namespace Infrastructure.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -41,7 +42,17 @@ namespace Infrastructure.Data
             modelBuilder.Entity<Role>(ConfigureRole);
             modelBuilder.Entity<UserRole>(ConfigureUserRole);
             modelBuilder.Entity<Review>(ConfigureReview);
+            modelBuilder.Entity<Favorite>(ConfigureFavorite);
 
+        }
+
+        private void ConfigureFavorite(EntityTypeBuilder<Favorite> builder)
+        {
+            builder.HasKey(f => new
+            {
+                f.UserId,
+                f.MovieId
+            });
         }
 
         private void ConfigureReview(EntityTypeBuilder<Review> builder)
