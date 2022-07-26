@@ -35,6 +35,7 @@ namespace Infrastructure.Services
                 Revenue = movieDetails.Revenue,
                 ImdbUrl = movieDetails.ImdbUrl,
                 TmdbUrl = movieDetails.TmdbUrl,
+                BackdropUrl = movieDetails.BackdropUrl,
                 RunTime = movieDetails.RunTime,
                 Tagline = movieDetails.Tagline,
                 Price = movieDetails.Price
