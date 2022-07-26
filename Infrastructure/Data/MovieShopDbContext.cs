@@ -23,6 +23,11 @@ namespace Infrastructure.Data
         public DbSet<MovieGenre> MovieGenres { get; set; }
         public DbSet<Cast> Casts { get; set; }
         public DbSet<MovieCast> MovieCasts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +37,49 @@ namespace Infrastructure.Data
             modelBuilder.Entity<MovieGenre>(ConfigureMovieGenre);
             modelBuilder.Entity<Cast>(ConfigureCast);
             modelBuilder.Entity<MovieCast>(ConfigureMovieCast);
+            modelBuilder.Entity<User>(ConfigureUser);
+            modelBuilder.Entity<Role>(ConfigureRole);
+            modelBuilder.Entity<UserRole>(ConfigureUserRole);
+            modelBuilder.Entity<Review>(ConfigureReview);
+
+        }
+
+        private void ConfigureReview(EntityTypeBuilder<Review> builder)
+        {
+            builder.ToTable("Reviews");
+            builder.HasKey(rw => new
+            {
+                rw.MovieId, rw.UserId
+            });
+            builder.Property(rw => rw.Rating).HasColumnType("decimal(3,2)").HasDefaultValue(9.9m);
+            builder.Property(rw => rw.CreatedDate).HasDefaultValueSql("getdate()");
+
+        }
+
+        private void ConfigureUserRole(EntityTypeBuilder<UserRole> builder)
+        {
+            builder.ToTable("UserRoles");
+            builder.HasKey(ur => new
+            {
+                ur.RoleId,
+                ur.UserId
+            });
+        }
+
+        private void ConfigureRole(EntityTypeBuilder<Role> builder)
+        {
+            builder.Property(r => r.Name).HasMaxLength(20);
+        }
+
+        private void ConfigureUser(EntityTypeBuilder<User> builder)
+        {
+            builder.Property(u => u.Email).HasMaxLength(256);
+            builder.Property(u => u.FirstName).HasMaxLength(128);
+            builder.Property(u => u.LastName).HasMaxLength(128);
+            builder.Property(u => u.HashedPassword).HasMaxLength(1024);
+            builder.Property(u => u.PhoneNumber).HasMaxLength(16);
+            builder.Property(u => u.Salt).HasMaxLength(1024);
+            builder.Property(u => u.IsLocked).HasDefaultValue(false);
         }
 
         private void ConfigureMovieCast(EntityTypeBuilder<MovieCast> builder)

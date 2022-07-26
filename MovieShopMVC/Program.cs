@@ -12,7 +12,6 @@ builder.Services.AddControllersWithViews();
 
 // 
 builder.Services.AddScoped<IMovieService, MovieService>();
-
 builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
 
