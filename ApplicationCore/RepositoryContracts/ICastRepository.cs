@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.RepositoryContracts
 {
-    public class ICastRepository
+    public interface ICastRepository
     {
         Task<Cast> GetById(int id);
     }
