@@ -12,38 +12,44 @@ namespace Infrastructure.Services
     public class CastService : ICastService
     {
         private readonly ICastRepository _castRepository;
-
         public CastService(ICastRepository castRepository)
         {
             _castRepository = castRepository;
         }
 
-        public async Task<CastModel> GetCastDetails(int castId)
+        public async Task<CastDetailsModel> GetCastDetails(int castId)
         {
-            var cast = await _castRepository.GetById(castId);
+            var castDetails = await _castRepository.GetById(castId);
             string gender;
-            if (cast.Gender == "1") gender = "Female";
-            else if (cast.Gender == "2") gender = "Male";
-            else gender = "unavailable";
-
-            var castDetails = new CastModel
+            if (castDetails.Gender == "1")
             {
-                Id = cast.Id,
-                Name = cast.Name,
-                ProfilePath = cast.ProfilePath,
-                Gender = gender
-            };
-
-            foreach (var movie in cast.MoviesOfCast)
-            {
-                castDetails.Movies.Add(new MovieCardModel
-                {
-                    Id = movie.MovieId,
-                    Title = movie.Movie.Title,
-                    PosterUrl = movie.Movie.PosterUrl
-                });
+                gender = "Female";
             }
-            return castDetails;
+            else if (castDetails.Gender == "2")
+            {
+                gender = "Male";
+            }
+            else if (castDetails.Gender == "3")
+            {
+                gender = "Not applicable";
+            }
+            else
+            {
+                gender = "Unknown";
+            }
+            var castDetailsModel = new CastDetailsModel
+            {
+                Id = castDetails.Id,
+                Name = castDetails.Name,
+                Gender = gender,
+                ProfilePath = castDetails.ProfilePath,
+                TmdbUrl = castDetails.TmdbUrl
+            };
+            foreach (var movie in castDetails.MoviesOfCast)
+            {
+                castDetailsModel.Movies.Add(new MovieCardModel { Id = movie.Movie.Id, Title = movie.Movie.Title, PosterUrl = movie.Movie.PosterUrl });
+            }
+            return castDetailsModel;
         }
     }
 }

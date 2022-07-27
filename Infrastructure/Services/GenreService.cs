@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Models;
+using ApplicationCore.RepositoryContracts;
 using ApplicationCore.ServiceContracts;
 using System;
 using System.Collections.Generic;
@@ -10,20 +11,16 @@ namespace Infrastructure.Services
 {
     public class GenreService : IGenreService
     {
-        private readonly IGenreService _genreService;
-        public GenreService(IGenreService genreService)
+        private readonly IGenreRepository _genreRepository;
+        public GenreService(IGenreRepository genreRepository)
         {
-            _genreService = genreService;
+            _genreRepository = genreRepository;
         }
 
-        public async Task<List<GenreModel>> GetALlGenres()
+        public async Task<List<GenreModel>> GetAllGenres()
         {
-            var genres = await _genreService.GetALlGenres();
-            var genresModels = genres.Select(g => new GenreModel
-            {
-                Id = g.Id,
-                Name = g.Name
-            }).ToList();
+            var genres = await _genreRepository.GetAllGenres();
+            var genresModels = genres.Select(g => new GenreModel { Id = g.Id, Name = g.Name }).ToList();
             return genresModels;
         }
     }

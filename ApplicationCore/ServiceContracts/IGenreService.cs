@@ -9,6 +9,6 @@ namespace ApplicationCore.ServiceContracts
 {
     public interface IGenreService
     {
-        Task<List<GenreModel>> GetALlGenres();
+        Task<List<GenreModel>> GetAllGenres();
     }
 }
