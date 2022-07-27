@@ -16,6 +16,8 @@ builder.Services.AddScoped<IMovieRepository, MovieRepository>();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 
 
 // read the connection string from appsettings.json and inject connection into DbContext
