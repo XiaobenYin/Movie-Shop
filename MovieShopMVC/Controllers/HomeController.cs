@@ -20,7 +20,7 @@ namespace MovieShopMVC.Controllers
         // action methods inside the controller
 
         [HttpGet] // this specifies which http method
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             // home page
             // top 30 higest grossing movies
@@ -30,7 +30,7 @@ namespace MovieShopMVC.Controllers
             // passing data from controller/action methods to views, through C# models
 
             
-            var movieCards = _movieService.GetTopRevenueMovies();
+            var movieCards = await _movieService.GetTopRevenueMovies();
             
             return View(movieCards);
         }

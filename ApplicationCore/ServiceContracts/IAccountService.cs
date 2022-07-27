@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.ServiceContracts
 {
-    public interface IMovieService
+    public interface IAccountService
     {
-        // controllers will call services
-        Task<List<MovieCardModel>> GetTopRevenueMovies();
-        Task<MovieDetailsModel> GetMovieDetails(int movieId);
+        Task<bool> CreateUser(UserRegisterModel model);
+        Task<bool> ValidateUser(UserLoginModel model);
+
     }
 }
