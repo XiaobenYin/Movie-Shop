@@ -62,7 +62,8 @@ namespace Infrastructure.Data
             {
                 rw.MovieId, rw.UserId
             });
-            builder.Property(rw => rw.Rating).HasColumnType("decimal(3,2)").HasDefaultValue(9.9m);
+            builder.Property(r => r.ReviewText).HasMaxLength(20000);
+            builder.Property(rw => rw.Rating).HasColumnType("decimal(3,2)");
             builder.Property(rw => rw.CreatedDate).HasDefaultValueSql("getdate()");
 
         }
@@ -79,17 +80,19 @@ namespace Infrastructure.Data
 
         private void ConfigureRole(EntityTypeBuilder<Role> builder)
         {
-            builder.Property(r => r.Name).HasMaxLength(20);
+            builder.Property(r => r.Name).HasMaxLength(64);
         }
 
         private void ConfigureUser(EntityTypeBuilder<User> builder)
         {
+            builder.HasIndex(u => u.Email).IsUnique();
             builder.Property(u => u.Email).HasMaxLength(256);
             builder.Property(u => u.FirstName).HasMaxLength(128);
             builder.Property(u => u.LastName).HasMaxLength(128);
             builder.Property(u => u.HashedPassword).HasMaxLength(1024);
             builder.Property(u => u.PhoneNumber).HasMaxLength(16);
             builder.Property(u => u.Salt).HasMaxLength(1024);
+            builder.Property(u => u.ProfilePictureUrl).HasMaxLength(4096);
             builder.Property(u => u.IsLocked).HasDefaultValue(false);
         }
 
