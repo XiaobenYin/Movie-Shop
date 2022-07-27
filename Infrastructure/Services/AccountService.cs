@@ -15,6 +15,7 @@ namespace Infrastructure.Services
     public class AccountService : IAccountService
     {
         private readonly IUserRepository _userRepository;
+
         public AccountService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
@@ -22,7 +23,7 @@ namespace Infrastructure.Services
 
         public async Task<bool> CreateUser(UserRegisterModel model)
         {
-            // step 1: check if the email is in the db
+            // step 1: chek if the email exists in database
             var user = await _userRepository.GetUserByEmail(model.Email);
             if (user != null)
             {
@@ -31,9 +32,12 @@ namespace Infrastructure.Services
             var salt = GetRandomSalt();
 
             var hashedPassword = GetHashedPasswordWithSalt(model.Password, salt);
+
             // continue with registration
-            //create a unique salt and has the password with salt
-            // save the user into user repository
+            // create a unique salt and hash the passowrd with salt
+
+            // save the User into User Table using User Repository
+
             var dbUser = new User
             {
                 Email = model.Email,
@@ -44,12 +48,13 @@ namespace Infrastructure.Services
                 HashedPassword = hashedPassword
             };
 
-            var savedUser = await _userRepository.AddUser(user);
+            var savedUser = await _userRepository.AddUser(dbUser);
             if (savedUser.Id > 0)
             {
                 return true;
             }
             return false;
+
         }
 
         private string GetRandomSalt()
@@ -74,20 +79,22 @@ namespace Infrastructure.Services
             return hashed;
         }
 
-        public async Task<bool> ValidateUser(UserLoginModel model)
+        public async Task<UserInfoResponseModel> ValidateUser(UserLoginModel model)
         {
             var dbUser = await _userRepository.GetUserByEmail(model.Email);
             if (dbUser == null)
             {
-                throw new Exception("Please register first!");
+                throw new Exception("Please register first");
             }
 
             var hashedPassword = GetHashedPasswordWithSalt(model.Password, dbUser.Salt);
+
             if (hashedPassword == dbUser.HashedPassword)
             {
-                return true;
+                return new UserInfoResponseModel { Id = dbUser.Id, Email = dbUser.Email, FirstName = dbUser.FirstName, LastName = dbUser.LastName };
             }
-            return false;
+            return null;
+
         }
     }
 }
