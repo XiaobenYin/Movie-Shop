@@ -33,6 +33,30 @@ namespace Infrastructure.Repositories
             return movieDetails;
         }
 
+        public async Task<PagedResultSet<Movie>> GetMovieByGenrePagination(int genreId, int pageSize = 30, int page = 1)
+        {
+            var totalMoviesCountOfGenre = await _movieShopDbContext.MovieGenres.Where(g => g.GenreId == genreId).CountAsync();
+            if (totalMoviesCountOfGenre == 0)
+            {
+                throw new Exception("No Movies found for this genre!");
+            }
+            var movies = await _movieShopDbContext.MovieGenres.Where(g => g.GenreId == genreId)
+                .Include(g => g.Movie)
+                .OrderByDescending(m => m.Movie.Revenue)
+                .Select(m => new Movie
+                {
+                    Id = m.MovieId,
+                    PosterUrl = m.Movie.PosterUrl,
+                    Title = m.Movie.Title
+                })
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            var pagedMovies = new PagedResultSet<Movie>(movies, page, pageSize, totalMoviesCountOfGenre);
+            return pagedMovies;
+        }
+
         public MovieDetailsModel GetMovieDetails(int movieId)
         {
             throw new NotImplementedException();

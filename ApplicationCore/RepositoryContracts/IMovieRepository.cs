@@ -20,5 +20,6 @@ namespace ApplicationCore.RepositoryContracts
 
         Task<Movie> GetById(int id);
         MovieDetailsModel GetMovieDetails(int movieId);
+        Task<PagedResultSet<Movie>> GetMovieByGenrePagination(int genreId, int pageSize = 30, int page = 1);
     }
 }
