@@ -37,7 +37,8 @@ namespace MovieShopAPI.Controllers
 
             if (user != null)
             {
-                var token = CreateJwtToken(user);
+                var jwtToken = CreateJwtToken(user);
+                return Ok(new {token = jwtToken});
             }
 
             return Unauthorized(new { errorMessage = "Please check email and password" });
