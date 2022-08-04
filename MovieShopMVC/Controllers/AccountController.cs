@@ -71,9 +71,6 @@ namespace MovieShopMVC.Controllers
 
             // create cookie with some expiration time
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
-
-
-
             return LocalRedirect("~/");
         }
     }

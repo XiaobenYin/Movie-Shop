@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F16AFEA0-04D8-4030-89F5-70051BABE4DD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieShopAPI", "MovieShopAPI\MovieShopAPI.csproj", "{1FBF9D00-075A-4E89-A0EE-6B3AAECC73D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{7753E860-4C75-4184-9FDF-F19782A735EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7753E860-4C75-4184-9FDF-F19782A735EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7753E860-4C75-4184-9FDF-F19782A735EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FBF9D00-075A-4E89-A0EE-6B3AAECC73D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FBF9D00-075A-4E89-A0EE-6B3AAECC73D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FBF9D00-075A-4E89-A0EE-6B3AAECC73D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FBF9D00-075A-4E89-A0EE-6B3AAECC73D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
